@@ -1,0 +1,191 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>¡Feliz Día de las Flores Amarillas!</title>
+    <link href="https://fonts.googleapis.com/css2?family=Pacifico&family=Quicksand:wght@400;700&display=swap" rel="stylesheet">
+    <style>
+        :root {
+            --yellow-light: #fffacd; /* Lemon Chiffon */
+            --yellow-medium: #ffd700; /* Gold */
+            --yellow-dark: #ccad00;   /* Dark Gold */
+            --text-color: #4b3d16;
+            --background-start: #fdf5e6; /* Old Lace */
+            --background-end: #fffacd;   /* Lemon Chiffon */
+        }
+
+        body {
+            font-family: 'Quicksand', sans-serif; /* Fuente principal */
+            color: var(--text-color);
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            text-align: center;
+            height: 100vh;
+            margin: 0;
+            padding: 20px;
+            background: linear-gradient(135deg, var(--background-start) 0%, var(--background-end) 100%); /* Degradado */
+            overflow: hidden; /* Para ocultar flores fuera de pantalla */
+            position: relative; /* Necesario para los elementos flotantes */
+        }
+
+        .container {
+            background-color: rgba(255, 255, 255, 0.95); /* Fondo blanco semitransparente */
+            padding: 40px;
+            border-radius: 20px;
+            box-shadow: 0 8px 16px rgba(0, 0, 0, 0.2); /* Sombra más pronunciada */
+            max-width: 650px;
+            width: 100%;
+            position: relative;
+            z-index: 10; /* Asegura que esté por encima de las flores flotantes */
+            animation: fadeIn 1.5s ease-out; /* Animación de aparición */
+        }
+
+        h1 {
+            font-family: 'Pacifico', cursive; /* Fuente especial para el título */
+            color: var(--yellow-dark); /* Color más intenso para el título */
+            font-size: 3em; /* Tamaño más grande */
+            margin-bottom: 15px;
+            text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.1); /* Sombra en el texto del título */
+        }
+
+        p {
+            font-size: 1.3em;
+            line-height: 1.7;
+            margin-bottom: 20px;
+        }
+
+        .flower-button {
+            background-color: var(--yellow-medium);
+            color: var(--text-color);
+            border: none;
+            padding: 18px 35px;
+            font-size: 1.2em;
+            font-weight: bold;
+            border-radius: 50px;
+            cursor: pointer;
+            margin-top: 25px;
+            transition: background-color 0.3s ease, transform 0.2s ease, box-shadow 0.3s ease;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2); /* Sombra en el botón */
+        }
+
+        .flower-button:hover {
+            background-color: var(--yellow-dark);
+            transform: translateY(-3px) scale(1.02);
+            box-shadow: 0 6px 12px rgba(0, 0, 0, 0.3);
+        }
+
+        .message-container {
+            margin-top: 30px;
+            font-style: italic;
+            color: #8c7b4c;
+            min-height: 100px; /* Más espacio para el mensaje y la imagen */
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            opacity: 0; /* Oculto inicialmente */
+            animation: fadeInMessage 1s forwards; /* Animación de aparición */
+            animation-delay: 0.5s; /* Retraso para que aparezca después del clic */
+        }
+        
+        .message-container p {
+            font-size: 1.4em; /* Mensaje más grande */
+            font-weight: 700; /* Negrita */
+            color: var(--text-color);
+            margin-bottom: 15px;
+        }
+
+        .message-container img {
+            max-width: 180px; /* Tamaño un poco más grande para el GIF */
+            height: auto;
+            border-radius: 15px;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.15);
+        }
+
+        /* Pequeñas flores flotantes de fondo */
+        .floating-flower {
+            position: absolute;
+            background-color: var(--yellow-light);
+            border-radius: 50%;
+            opacity: 0.6;
+            animation: float 15s infinite ease-in-out;
+            pointer-events: none; /* Para que no interfieran con el clic */
+            z-index: 1; /* Para que estén detrás del contenedor principal */
+        }
+        .floating-flower:nth-child(1) { width: 15px; height: 15px; left: 10%; top: 20%; animation-duration: 12s; }
+        .floating-flower:nth-child(2) { width: 20px; height: 20px; left: 25%; top: 50%; animation-duration: 18s; animation-delay: 2s; background-color: var(--yellow-medium); }
+        .floating-flower:nth-child(3) { width: 10px; height: 10px; left: 40%; top: 10%; animation-duration: 10s; animation-delay: 1s; }
+        .floating-flower:nth-child(4) { width: 18px; height: 18px; left: 55%; top: 70%; animation-duration: 16s; animation-delay: 3s; background-color: var(--yellow-light); }
+        .floating-flower:nth-child(5) { width: 12px; height: 12px; left: 70%; top: 30%; animation-duration: 14s; }
+        .floating-flower:nth-child(6) { width: 22px; height: 22px; left: 85%; top: 60%; animation-duration: 20s; animation-delay: 4s; background-color: var(--yellow-medium); }
+        .floating-flower:nth-child(7) { width: 16px; height: 16px; left: 5%; top: 80%; animation-duration: 13s; animation-delay: 1.5s;}
+        .floating-flower:nth-child(8) { width: 14px; height: 14px; left: 90%; top: 15%; animation-duration: 11s; animation-delay: 0.5s;}
+
+        @keyframes float {
+            0% { transform: translateY(0px) rotate(0deg); opacity: 0.6; }
+            50% { transform: translateY(-20px) rotate(10deg); opacity: 0.8; }
+            100% { transform: translateY(0px) rotate(0deg); opacity: 0.6; }
+        }
+
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(20px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+
+        @keyframes fadeInMessage {
+            from { opacity: 0; transform: translateY(10px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+
+    </style>
+</head>
+<body>
+
+    <div class="floating-flower"></div>
+    <div class="floating-flower"></div>
+    <div class="floating-flower"></div>
+    <div class="floating-flower"></div>
+    <div class="floating-flower"></div>
+    <div class="floating-flower"></div>
+    <div class="floating-flower"></div>
+    <div class="floating-flower"></div>
+
+    <div class="container">
+        <h1>¡Para ti, con mucho cariño! de Kevin Anastacio</h1>
+        <p>Hoy es un día especial para regalar flores amarillas y simbolizar la amistad, la felicidad y los nuevos comienzos.</p>
+        <p>A mi manera,espero que este pequeño detalle te saque una sonrisa y te recuerde lo especial que eres para mí.</p>
+        
+        <button class="flower-button" onclick="showMessage()">¡Abre tu flor!</button>
+        
+        <div class="message-container" id="flower-message"></div>
+    </div>
+
+    <script>
+        function showMessage() {
+            const messages = [
+                "¡Que tu vida esté llena de luz, alegría y muchísimas flores amarillas!",
+                "Como una flor, tu amistad ilumina mi vida. ¡Gracias por estar siempre ahí!",
+                "Que este día te traiga toda la felicidad y la energía que te mereces. ¡Te quiero!"
+            ];
+            
+            const randomMessage = messages[Math.floor(Math.random() * messages.length)];
+            
+            document.getElementById('flower-message').innerHTML = `
+                <p>${randomMessage}</p>
+                <img src="https://i.pinimg.com/originals/91/a9/f5/91a9f5ea8f8fabb3e2e91cfdbef68759.gif" alt="Flores Amarillas" width="180" style="margin-top: 15px; border-radius: 15px;">
+            `;
+            
+            // Hace visible el contenedor del mensaje con la animación
+            document.getElementById('flower-message').style.opacity = '1';
+            document.getElementById('flower-message').style.transform = 'translateY(0)';
+
+            // Oculta el botón después de hacer clic
+            document.querySelector('.flower-button').style.display = 'none';
+        }
+    </script>
+
+</body>
+</html>
